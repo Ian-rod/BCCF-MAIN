@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="login.css">
+    <style>
+    </style>
+    <title>
+        BCCF inventory
+    </title>
+</head>
+
+<body>
+    <center>
+        <h1>BCCF inventory</h1>
+        <div id="inventory"></div>
+</center>
+<br>
+<label for="operation">Select an operation</label>
+<input list="operation" name="selectedoperation">
+<datalist id="operation">
+    <option value="Add">
+    <option value="Delete">
+    <option value="update">
+     <option value="refresh">
+    </datalist>
+    <br>
+    <fieldset>
+        <legend>Alter the inventory</legend>
+        <div id="CRUD">
+        </div>
+    </fieldset>
+<script src="./dist/bundle.js" type="module">
+</script>
+</body>
+
+</html>

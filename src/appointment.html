@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+</script>
+<link rel="stylesheet" href="login.css">
+<style>
+</style>
+<title>
+Book appointment page
+</title>
+</head>
+<body>
+<h1>Book appointment</h1>
+<div >
+<fieldset>
+<legend> Book an appointment</legend>
+<br>
+<label for="reason"> Select appointment reason</label>
+<select id="reason" name="reason">
+<option selected value="confession">I want to have a confession session</option>
+<option value="Private meeting">I want to have a private meeting</option>
+</select>
+<br>
+<br>
+<label for "appointmentdate"> Select appointment Date</label>
+<input type="date" id="appointmentdate">
+<br>
+<br>
+<label for "appointmenttime"> Select appointment time</label>
+<input list="appointment" name="appointmenttime">
+<datalist id="appointment" required>
+<option value="8am">
+<option value="9am">
+<option value="10am">
+<option value="11am">
+<option value="12pm">
+<option value="1pm">
+</datalist>
+<br>
+<br>
+<button /*onclick="window.location.href = './appointment.html'"*/ id="appointmentbooked">Book appointment</button>
+<script src="./dist/bundle.js" type="module">  
+</script>
+</fieldset>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<br>
+</datalist>
+	
+</div>
+</body>
+</html>

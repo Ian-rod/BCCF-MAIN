@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="./login.css">
+<style>
+</style>
+<title>
+Sign up 
+</title>
+</head>
+<body>
+<center>
+<h1>WELCOME TO BCCF</h1>
+<div id="signuppage">
+<fieldset>
+<legend> Sign up</legend>
+<label for="uname">
+Username:
+</label>
+<input type="text" id="uname" name ="uname" required><br>
+<label for="pass">
+<br>
+<br>
+Password:
+</label>
+<input type="password" id="pass" name ="pass"><br>
+<h2>Enter your gender</h2>
+<input type="radio" id="male" name="gender" value="male">
+<label for="male">
+Male
+</label>
+<input type="radio" id="female" name="gender" value="female">
+<label for="female">
+Female
+</label>
+<input type="radio" id="none" name="gender" value="none" onclick=display()>
+<label for="none">
+None
+ </label>
+ <br>
+ <br>
+ <label for="cartegory">Select your age cartegory</label>
+ <input list="select">
+<datalist id="select">
+<option value="Adult">
+<option value="Child">
+<option value="Youth">
+</datalist>
+<br>
+<br>
+<button id="signup">Sign up</button>
+<script src="./dist/bundle.js" type="module">  
+</script>
+</fieldset>
+</center>
+
+<br>
+<br>
+<br>
+<p id="demo"></p>
+<br>
+<br>
+	
+</div>
+</body>
+</html>
