@@ -20,6 +20,7 @@ const app= initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   const database =getFirestore();
+
   var currentuser;
   //book appointment
   let current = new Date();
@@ -63,13 +64,8 @@ document.getElementById("createevent")?.addEventListener("click",addannouncement
   announce();
 //book an appointment
  async function book() {
-   //sort out time from and time to issue
-   const querySnapshot = await getDocs(collection(database, "inventory"),where("appointmentdate", "==", document.getElementById("appointmentdate")?.value));
-   const querySnapshot1 = await getDocs(collection(database, "inventory"),where("appointmentdate", "==", document.getElementById("appointmentdate")?.value));
-   console.log(querySnapshot.appointmentdate)
-   console.log(querySnapshot1.appointmenttime)
-   if(querySnapshot==null&&querySnapshot1==null)
-   {
+const checkappointments = collection(database, "appointments");
+// Create a query against the collection.
     const appointment=doc(database,"appointments/"+currentuser);
     const data={
       reason:document.getElementById("reason")?.value,
@@ -83,10 +79,7 @@ document.getElementById("createevent")?.addEventListener("click",addannouncement
  catch(e){
    alert(e);
  }
-  }
-   else{
-    alert("That specific date and time is already booked");
-  }}
+}
   document.getElementById("appointmentbooked")?.addEventListener("click",book);
   //fetch the church inventory
   async function fetchinventory()
@@ -232,7 +225,7 @@ fetchinventory();
       conditionlabel.appendChild(conditionnode);
       var itemquantity = document.createElement('input');
       itemquantity.type = 'text';
-      itemquantity.id = 'condition';
+      itemquantity.id = 'quantity';
       var quantitylabel = document.createElement('p');
       const quantitynode= document.createTextNode("Enter item quantity:");
       quantitylabel.appendChild(quantitynode);
@@ -254,7 +247,7 @@ fetchinventory();
       document.getElementById("CRUD")?.appendChild(space4);
       document.getElementById("CRUD")?.appendChild(space5);
       document.getElementById("CRUD")?.appendChild(updateitem);
-      document.getElementById("updateitem")?.addEventListener("click",add);
+      document.getElementById("updateitem")?.addEventListener("click",update);
       
     }
    else if (operation=="refresh")
@@ -268,7 +261,7 @@ document.getElementsByName("selectedoperation")[0]?.addEventListener("change",cr
 //update function
 async function update(){
   console.log("Update function called");
-  const updateinventory=doc(database,"inventory/"+document.getElementById("item")?.value);
+  const updateinventory=doc(database,"inventory/",document.getElementById("item")?.value);
   const data={
     condition: document.getElementById("condition")?.value,
     quantity: document.getElementById("quantity")?.value
@@ -307,7 +300,7 @@ async function deleteinventoryitem()
    try{
    const snapshot=await deleteDoc(deleteinventory);
    if(snapshot.exists()){
-   alert("Item succesfully added");
+   alert("Item succesfully deleted");
   }
   else{
     alert(document.getElementById("item")?.value+" "+"doesnt exist in the inventory");
@@ -317,6 +310,64 @@ async function deleteinventoryitem()
   alert(e);
 }
 }
+//view appointments
+// async function viewappointments() {
+//    //create the appointments table and attach to div
+ 
+// let row_1 = document.createElement('tr');
+// let table = document.createElement('table');
+// let thead = document.createElement('thead');
+// let tbody = document.createElement('tbody');
+// let heading_1 = document.createElement('th');
+// heading_1.innerHTML = "Date";
+// let heading_2 = document.createElement('th');
+// heading_2.innerHTML = "8am";
+// row_1.appendChild(heading_2);
+// let heading_3 = document.createElement('th');
+// heading_3.innerHTML = "9am";
+// row_1.appendChild(heading_3);
+// let heading_4 = document.createElement('th');
+// heading_4.innerHTML = "10am";
+// row_1.appendChild(heading_4);
+// let heading_5 = document.createElement('th');
+// heading_5.innerHTML = "11am";
+// row_1.appendChild(heading_5);
+// let heading_6 = document.createElement('th');
+// heading_6.innerHTML = "12pm";
+// row_1.appendChild(heading_7);
+// let heading_7 = document.createElement('th');
+// heading_7.innerHTML = "1pm";
+// row_1.appendChild(heading_7);
+// thead.appendChild(row_1);
+
+// row_1.appendChild(heading_1);
+
+//   const querySnapshot = await getDocs(collection(database, "appointments"));
+//    querySnapshot.forEach((doc) => {
+
+//     const row1=document.createElement('tr');
+//     const data1=document.createElement('td');
+//     data1.innerHTML=doc.data().appointmentdate;
+//     row1.appendChild(data1);
+//     const data2=document.createElement('td');
+//     data2.innerHTML=doc.data().reason+": "+doc.id;
+//     row1.appendChild(data2);
+//     const data3=document.createElement('td');
+//     data3.innerHTML=doc.data().reason+": "+doc.id;
+//     row1.appendChild(data3);
+//     tbody.appendChild(row1);
+
+//     //append headings
+//   console.log(doc.id, " => ", doc.data());
+// });
+// table.appendChild(thead);
+// table.appendChild(tbody);
+// //add if checker if table is empty
+// // Adding the entire table to the body tag
+// document.getElementById('viewappointments')?.appendChild(table);  
+// }
+// //call the view appointments table
+// viewappointments()
 //an update listener calling the add function
 //sign up
 const signupemail= async()=>
@@ -324,12 +375,10 @@ const signupemail= async()=>
   var email = document.getElementById("uname");
   var password = document.getElementById("pass");
   await createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then((userCredential) => {
+    .then ((userCredential) =>{
       // Signed up 
-      alert("SignUp Successfully");
-      const user = userCredential.user;
-      console.log(user.user);
-      window.location.href = "./home.html";
+      currentuser = userCredential.user.email;
+      console.log(user);
       // ...
     })
     .catch((error) => {
@@ -337,14 +386,31 @@ const signupemail= async()=>
       const errorMessage = error.message;
       alert(errorCode + "  " + errorMessage);
       // ..
-    });
+    })
+   await adduser()
+   alert("SignUp Successful");
+   window.location.href = "./home.html";
 } 
+//add user to users table
+async function adduser(){
+  const adduser=doc(database,"Users/"+currentuser);
+  const data={
+  Role:document.getElementById("role")?.value,     
+   }
+  try{
+  await setDoc(adduser,data);
+  console.log("user role assigned sucessfully")
+  }
+  catch(e){
+  alert(e);
+  }
+}
 document.getElementById("signup")?.addEventListener("click",signupemail); 
   // SignIN function
 const loginemail= async()=>
 {
-var email = document.getElementById("uname");
-var password = document.getElementById("pass");
+var email = document.getElementById("loginname");
+var password = document.getElementById("loginpass");
 await signInWithEmailAndPassword(auth, email.value, password.value)
   .then((userCredential) => {
     // Signed in 
@@ -380,3 +446,16 @@ document.getElementById("login")?.addEventListener("click",loginemail);
       // ...
     }
   });
+//sytylings by caleb
+//Sign up and login 
+const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton?.addEventListener('click', () => {
+container.classList.add("right-panel-active");
+});
+
+signInButton?.addEventListener('click', () => {
+container.classList.remove("right-panel-active");
+});

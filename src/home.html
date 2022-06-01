@@ -1,43 +1,105 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="login.css">
-    <style>
-    </style>
-    <title>
-        Home
-    </title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BCCF Church </title>
+
+  <!-- Adding script to connect navbar -->
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <!-- Adding css for announcment form -->
+  <link rel="stylesheet" type="text/css" href="css/form.css">
 </head>
 
-<body>
-    <center>
-        <h1>WELCOME TO BCCF</h1>
-        <div id="homepage">
-            <button id="inventorypage" onclick="window.location.href = './inventory.html'">View BCCF inventory</button>
-            <br>
-            <br>
-            <button id="Bible">Get Bible</button>
-            <br>
-            <br>
-            <button id="appointmentpage" onclick="window.location.href = './appointment.html'">Book an appointment</button>
-            <br>
-            <br>
-            <button id="addannouncement" onclick="window.location.href = './addannouncement.html'">Add an announcement</button>
-                <br>
-                <div>                   
-                    <dl id="announcements">
-                      </dl>
-                </dl>
-                </div>
-                <br>
-                <button id="signout">Sign out</button>
-                <script src="./dist/bundle.js" type="module">
-                    </script>
-    </center>
-    <br>
-    <br>
-</div>
-</body>
 
+<!-- Change js to one file and npm -->
+<!-- <script src="./javascriptfile.js"></script>
+<link rel="stylesheet" href="./stylesheet.css">
+-->
+
+  <body>
+    <div id="nav-placeholder">
+    </div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("Navpage.html");
+    });
+    </script>
+    <br>
+    <center>
+      <video width="320" height="240" controls>
+        <source src="./Introduction to Computer Networks.mp4" type="video/mp4">
+      </video>
+      <video width="320" height="240" controls>
+          <source src="./Introduction to Computer Networks.mp4" type="video/mp4">
+          </video>
+      <video width="320" height="240" controls>
+          <source src="./Introduction to Computer Networks.mp4" type="video/mp4">
+      </video>
+      <br>
+      <div id="homepage">
+          <br>
+          <button id="Bible">Get Bible</button>
+          <br>
+          <br>
+          <button id="addannouncement" onclick="window.location.href = './addannouncement.html'">Add an announcement</button>
+          <br>
+          <div>                   
+            <dl id="announcements">
+              </dl>
+            </dl>
+          </div>
+          <br>
+    </center>
+    <button class="open-button" onclick="openForm()">Book an appointment</button>
+    <div class="form-popup" id="myForm">
+      <div class="form-container">
+            <center>
+                <h1>Book appointment</h1>
+                <label for="reason"> Select appointment reason</label>
+                <select id="reason" name="reason">
+                <option selected value="confession">I want to have a confession session</option>
+                <option value="Private meeting">I want to have a private meeting</option>
+                </select>
+                <br>
+                <br>
+                <label for "appointmentdate"> Select appointment Date</label>
+                <input type="date" id="appointmentdate">
+                <br>
+                <br>
+                <label for "appointmenttime"> Select appointment time</label>
+                <input list="appointment" name="appointmenttime">
+                <datalist id="appointment" required>
+                <option value="8am">
+                <option value="9am">
+                <option value="10am">
+                <option value="11am">
+                <option value="12pm">
+                <option value="1pm">
+                </datalist>
+                <br>
+            </center>
+            <button /*onclick="window.location.href = './appointment.html'"*/ class="btn" id="appointmentbooked">Book appointment</button>
+            <button type="button" class="btn cancel" id="closeForm">Close</button>
+        </div>
+      </div>
+      <script>
+        function openForm() {
+          document.getElementById("myForm").style.display = "block";
+          }
+          function closeForm() {
+          document.getElementById("myForm").style.display = "none";
+          }
+          function openNav() {
+          document.getElementById("mySidenav").style.width = "175px";
+        }
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+  </script>
+      <script src="./dist/bundle.js" type="module">
+      </script>
+  </body>
 </html>

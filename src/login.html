@@ -1,45 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="login.css">
-    <style>
-    </style>
-    <title>
-        Log in
-    </title>
-</head>
-
-<body>
-    <center>
-        <h1>WELCOME TO BCCF</h1>
-        <div id="loginpage">
-            <fieldset>
-                <legend>Log in</legend>
-                <label for="uname">
-                    Username:
-                </label>
-                <input type="text" id="uname" name="uname" required><br>
-                <label for="pass">
-                    <br>
-                    <br>
-                    Password:
-                </label>
-                <input type="password" id="pass" name="pass"><br>
-                <br>
-                <br>
-                <button id="login">Log in</button>
-                <script src="./dist/bundle.js" type="module">  
-                    </script>
-            </fieldset>
-    </center>
-    <br>
-    <br>
-    <br>
-    <p id="demo"></p>
-    <br>
-    <br>
-
-</div>
-</body>
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Log in</title>
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+        <script></script>
+    </head>
+    <body>
+        <h2>Welcome to BCCF</h2>
+        <div class="container" id="container">
+            <div class="form-container sign-up-container">
+                <article>
+                    <h1>Create Account</h1>
+                    <span>or use your email for registration</span>
+                    <input type="email" placeholder="Email" id="uname" name ="uname" required />
+                    <input type="password" placeholder="Password" id="pass" name ="pass" />
+                    <label for="role">Select role</label>
+                    <input list="select" id="role">
+                        <datalist id="select">
+                            <option value="Admin">
+                            <option value="Pastor">
+                            <option value="Christian">
+                        </datalist>
+                    <button id="signup">Sign Up</button>
+                </article>
+            </div>
+            <div class="form-container sign-in-container">
+                <article>
+                    <h1>Sign in</h1>
+                    <span>or use your account</span>
+                    <input type="email" placeholder="Email" id="loginname"name="uname" required/>
+                    <input type="password" placeholder="Password" id="loginpass" name="pass"/>
+                    <a href="#">Forgot your password?</a>
+                    <button id="login">Sign In</button>
+                </article>
+            </div>
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p>To keep connected with us please login with your personal info</p>
+                        <button class="ghost" id="signIn">Sign In</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Enter your personal details and start spiritual journey with us</p>
+                        <button class="ghost" id="signUp">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./dist/bundle.js" type="module">  
+        </script>
+    </body>
 </html>
