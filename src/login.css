@@ -1,0 +1,44 @@
+body{
+	background:blue
+
+}
+h1{
+	color:white
+}
+h2{
+	color:white
+}
+h3{
+	color:white
+}
+label{
+	color:white
+}
+option
+{
+	color:white
+}
+p#demo{
+	color:white
+}
+legend{
+	color:white
+}
+a{
+	color:white
+}
+li{
+	color:white
+}
+table{
+	border-collapse: collapse;
+	border-spacing: 0;
+	color: white;
+}
+th, td{
+	padding: 10px 20px;
+	border: 1px solid #000;
+}
+div{
+	color: #000;
+}

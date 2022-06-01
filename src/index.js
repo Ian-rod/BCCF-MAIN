@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {getAnalytics} from "firebase/analytics";
 import { doc, query,where ,getFirestore, setDoc,collection,getDocs, deleteDoc,updateDoc }from "firebase/firestore";
-
 //import "https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js";
 import {getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged, OperationType} from "firebase/auth";
 import { async } from "@firebase/util";
@@ -25,6 +24,7 @@ const app= initializeApp(firebaseConfig);
   //book appointment
   let current = new Date();
   let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+  var date=cDate.toString();
   let cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
   let dateTime = cDate + ' ' + cTime;
   console.log(dateTime);
@@ -311,63 +311,49 @@ async function deleteinventoryitem()
 }
 }
 //view appointments
-// async function viewappointments() {
-//    //create the appointments table and attach to div
- 
-// let row_1 = document.createElement('tr');
-// let table = document.createElement('table');
-// let thead = document.createElement('thead');
-// let tbody = document.createElement('tbody');
-// let heading_1 = document.createElement('th');
-// heading_1.innerHTML = "Date";
-// let heading_2 = document.createElement('th');
-// heading_2.innerHTML = "8am";
-// row_1.appendChild(heading_2);
-// let heading_3 = document.createElement('th');
-// heading_3.innerHTML = "9am";
-// row_1.appendChild(heading_3);
-// let heading_4 = document.createElement('th');
-// heading_4.innerHTML = "10am";
-// row_1.appendChild(heading_4);
-// let heading_5 = document.createElement('th');
-// heading_5.innerHTML = "11am";
-// row_1.appendChild(heading_5);
-// let heading_6 = document.createElement('th');
-// heading_6.innerHTML = "12pm";
-// row_1.appendChild(heading_7);
-// let heading_7 = document.createElement('th');
-// heading_7.innerHTML = "1pm";
-// row_1.appendChild(heading_7);
-// thead.appendChild(row_1);
+async function viewappointments() {
+  console.log("view appointments called")
+   //create the appointments table and attach to div
+   let row_1 = document.createElement('tr');
+   let table = document.createElement('table');
+   let thead = document.createElement('thead');
+   let tbody = document.createElement('tbody');
+   let heading_1 = document.createElement('th');
+   heading_1.innerHTML = "Apointment Time";
+   row_1.appendChild(heading_1);
+   let heading_2 = document.createElement('th');
+   heading_2.innerHTML = "attendee";
+   row_1.appendChild(heading_2);
+   let heading_3 = document.createElement('th');
+    heading_3.innerHTML = "Reason";
+    row_1.appendChild(heading_3);
+    thead.appendChild(row_1);
+    const querySnapshot = await getDocs(collection(database, "appointments"));
+   querySnapshot.forEach((doc) => {
+     if(doc.data().appointmentdate==document.getElementById("appointmentdateselected")?.value)
+     {
+    const row1=document.createElement('tr');
+    const data1=document.createElement('td');
+    const data2=document.createElement('td');
+    const data3=document.createElement('td'); 
+    //adding data
+    data1.innerHTML=doc.data().appointmenttime;
+    row1.appendChild(data1);
+    data2.innerHTML=doc.id;
+    row1.appendChild(data2);
+    data3.innerHTML=doc.data().reason;
+    row1.appendChild(data3);
+    console.log(doc.id, " => ", doc.data());
+    tbody.appendChild(row1)
+     }
+});
 
-// row_1.appendChild(heading_1);
-
-//   const querySnapshot = await getDocs(collection(database, "appointments"));
-//    querySnapshot.forEach((doc) => {
-
-//     const row1=document.createElement('tr');
-//     const data1=document.createElement('td');
-//     data1.innerHTML=doc.data().appointmentdate;
-//     row1.appendChild(data1);
-//     const data2=document.createElement('td');
-//     data2.innerHTML=doc.data().reason+": "+doc.id;
-//     row1.appendChild(data2);
-//     const data3=document.createElement('td');
-//     data3.innerHTML=doc.data().reason+": "+doc.id;
-//     row1.appendChild(data3);
-//     tbody.appendChild(row1);
-
-//     //append headings
-//   console.log(doc.id, " => ", doc.data());
-// });
-// table.appendChild(thead);
-// table.appendChild(tbody);
-// //add if checker if table is empty
-// // Adding the entire table to the body tag
-// document.getElementById('viewappointments')?.appendChild(table);  
-// }
-// //call the view appointments table
-// viewappointments()
+table.appendChild(thead);
+table.appendChild(tbody);
+document.getElementById('viewappointments')?.appendChild(table);
+}
+//call the view appointments table
+document.getElementById("fetchappointment")?.addEventListener("click",viewappointments);
 //an update listener calling the add function
 //sign up
 const signupemail= async()=>
@@ -428,22 +414,22 @@ await signInWithEmailAndPassword(auth, email.value, password.value)
 document.getElementById("login")?.addEventListener("click",loginemail);   
   
   // SignOut
-  const signout=async()=>
-  {
+async function signout()
+{
     await auth.signOut();
     alert("SignOut Successfully from System");
     window.location.href = "./index.html";
-  }
-  document.getElementById("signout")?.addEventListener("click",signout);
-  onAuthStateChanged(auth, (user) => {
+}
+document.getElementById("logout")?.addEventListener("click",signout());
+  
+onAuthStateChanged(auth, (user) => {
     if (user) {
       currentuser=user.email;
       console.log("user signed in");
       // ...
     } else {
       console.log("user signed out");
-      // User is signed out
-      // ...
+      // User is signed out  // ...
     }
   });
 //sytylings by caleb
@@ -459,3 +445,6 @@ container.classList.add("right-panel-active");
 signInButton?.addEventListener('click', () => {
 container.classList.remove("right-panel-active");
 });
+// $(function(){
+//   $("#nav-placeholder").load("Navpage.html");
+// });
